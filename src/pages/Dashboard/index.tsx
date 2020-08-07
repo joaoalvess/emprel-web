@@ -36,16 +36,25 @@ const Dashboard: React.FC = () => {
 
   useEffect(() => {
     async function loadForms() {
-      await api.get(`/form?select=data&data=${severDate}`)
+      await api.get(`/form?select=${select}&${select}=${severDate}`)
       .then((response:any) => {
         setData(response.data)
       })
       .catch(()=>{
         console.log("error")
       })
+      if(select != 'data') {
+        await api.get(`/form?select=${select}&${select}=true`)
+        .then((response:any) => {
+          setData(response.data)
+        })
+        .catch(()=>{
+          console.log("error")
+        })
+      }
     }
     loadForms()
-  },[severDate])
+  },[select, severDate])
 
   return (
     <>
@@ -74,7 +83,7 @@ const Dashboard: React.FC = () => {
           </DivFilter>
           {data.map((map, i) => (
             <ViewTable key={i}>
-              
+
             </ViewTable>
           ))}
         </DataContainer>

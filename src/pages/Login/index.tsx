@@ -33,8 +33,8 @@ const Login: React.FC = () => {
           <Title>Questionário Diário de Sintomas</Title>
           <Label>Seu CPF*</Label>
           <Input
-            type="email"
-            name="email" 
+            type="numberpad"
+            name="numberpad" 
             placeholder="somente numeros"
             value={selectCpf}
             onChange={(e:React.ChangeEvent<HTMLInputElement>) => setSelectCpf(e.target.value)}

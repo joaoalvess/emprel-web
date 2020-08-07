@@ -39,6 +39,7 @@ const Dashboard: React.FC = () => {
       await api.get(`/form?select=${select}&${select}=${severDate}`)
       .then((response:any) => {
         setData(response.data)
+        console.log(response.data)
       })
       .catch(()=>{
         console.log("error")
@@ -66,24 +67,24 @@ const Dashboard: React.FC = () => {
         </DivSearch>
         <DataContainer>
           <DivFilter>
-            <FilterButton>Infectado</FilterButton>
-            <FilterButton>Temperatura</FilterButton>
-            <FilterButton>Falta de Paladar</FilterButton>
-            <FilterButton>Falta de Olfato</FilterButton>
-            <FilterButton>Dor no Corpo</FilterButton>
-            <FilterButton>Dor de Cabeça</FilterButton>
+            <FilterButton onClick={() => { setSelect("infectado") }} >Infectado</FilterButton>
+            <FilterButton onClick={() => { setSelect("Temperatura") }} >Temperatura</FilterButton>
+            <FilterButton onClick={() => { setSelect("paladar") }} >Falta de Paladar</FilterButton>
+            <FilterButton onClick={() => { setSelect("olfato") }} >Falta de Olfato</FilterButton>
+            <FilterButton onClick={() => { setSelect("corpo") }} >Dor no Corpo</FilterButton>
+            <FilterButton onClick={() => { setSelect("cabeça") }} >Dor de Cabeça</FilterButton>
           </DivFilter>
           <DivFilter>
-            <FilterButton>Dor de Garganta</FilterButton>
-            <FilterButton>Calafrios</FilterButton>
-            <FilterButton>Falta de Ar</FilterButton>
-            <FilterButton>Febre</FilterButton>
-            <FilterButton>Tosse</FilterButton>
-            <FilterButton>Contato com infectado</FilterButton>
+            <FilterButton onClick={() => { setSelect("garganta") }} >Dor de Garganta</FilterButton>
+            <FilterButton onClick={() => { setSelect("calafrio") }} >Calafrios</FilterButton>
+            <FilterButton onClick={() => { setSelect("falta_ar") }} >Falta de Ar</FilterButton>
+            <FilterButton onClick={() => { setSelect("febre") }} >Febre</FilterButton>
+            <FilterButton onClick={() => { setSelect("tosse") }} >Tosse</FilterButton>
+            <FilterButton onClick={() => { setSelect("contato_infectdo") }} >Contato com infectado</FilterButton>
           </DivFilter>
           {data.map((map, i) => (
             <ViewTable key={i}>
-
+                <h1> {map.temperatura} </h1>
             </ViewTable>
           ))}
         </DataContainer>

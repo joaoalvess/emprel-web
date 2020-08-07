@@ -34,6 +34,9 @@ export const SearchButton = styled.button`
   font-size: 16px;
   color: #f4f4f5;
   font-family: 'roboto', sans-serif;
+  &:hover {
+      background-color: #357ebd;
+  }
 `;
 
 export const FilterButton = styled.button`
@@ -43,6 +46,11 @@ export const FilterButton = styled.button`
   padding: 7px 10px 7px 10px;
   margin-right: 10px;
   border: 1px solid #2C4FA1;
+
+    &:hover {
+    background-color: #2C4FA1;
+    color: #f4f4f5;
+    }
 `;
 
 export const DivFilter = styled.div`

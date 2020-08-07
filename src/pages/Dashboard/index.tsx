@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Search, SearchButton, DivSearch, DivFilter, FilterButton, DataContainer, ViewTable } from './styles';
+import { Container, Search, SearchButton, DivSearch, DivFilter, FilterButton, DataContainer, ViewTable, ButtonTable } from './styles';
 import api from '../../services/api'
 import Menu from '../../components/Menu'
 
@@ -82,10 +82,25 @@ const Dashboard: React.FC = () => {
             <FilterButton onClick={() => { setSelect("tosse") }} >Tosse</FilterButton>
             <FilterButton onClick={() => { setSelect("contato_infectdo") }} >Contato com infectado</FilterButton>
           </DivFilter>
+          <ViewTable>
+            <ButtonTable>Nome</ButtonTable>
+            <ButtonTable>Apto</ButtonTable>
+            <ButtonTable>Email</ButtonTable>
+            <ButtonTable>Numero</ButtonTable>
+            <ButtonTable>Numero</ButtonTable>
+            <ButtonTable>Sintomas</ButtonTable>
+            <ButtonTable>Date</ButtonTable>
+          </ViewTable>
           {data.map((map, i) => (
-            <ViewTable key={i}>
-                <h1> {map.temperatura} </h1>
-            </ViewTable>
+            <table key={i}>
+              <tr>
+                <td>test</td>
+                <td> {map.febre} </td>
+                <td> {map.temperatura} </td>
+                <td> {map.temperatura} </td>
+                <td> {map.data} </td>
+              </tr>
+            </table>
           ))}
         </DataContainer>
       </Container>

@@ -71,33 +71,19 @@ export const DataContainer = styled.div`
   padding: 20px 0
 `;
 
-export const Table = styled.table`
-  border: 1px solid black;
-  border-collapse: collapse;
-  width: 40vw;
-  margin-top: 30px;
-`;
-
-export const Td = styled.td`
-  border: 1px solid black;
-  text-align: left;
-  padding: 8px;
-  font-family: 'roboto', sans-serif;
-`;
-
-export const Th = styled.th`
-  border: 1px solid black;
-  text-align: left;
-  padding: 8px;
-  background-color: #2C4FA1;
-  color: white;
-  font-family: 'roboto', sans-serif;
-`;
-
-export const Tr = styled.tr`
-  tr:nth-child(even){background-color: #f2f2f2}
-`;
-
 export const ViewTable = styled.div`
-  width: 40vw;
+  width: 50vw;
+  display: flex;
+  background-color: #2C4FA1;
+  justify-content: space-around;
+  margin-top: 20px
+`;
+
+export const ButtonTable = styled.button`
+  font-size: 18px;
+  margin: 10px;
+  background: none;
+  border: none;
+  color: #f0f0f5;
+  font-family: 'roboto', sans-serif;
 `;

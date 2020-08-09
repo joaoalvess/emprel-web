@@ -7,8 +7,8 @@ export const Body = styled.body`
 `;
 
 export const Container = styled.div`
-  width: 100vw;
-  height: 100vh;
+  min-width: 100vw;
+  min-height: 100vh;
   background: #2C4FA1;
   display: flex;
   flex-direction: row;
@@ -18,7 +18,7 @@ export const Container = styled.div`
 
 export const Form = styled.div`
   width: 400px;
-  height: 720px;
+  height: 650px;
   display: flex;
   flex-direction: column;
   justify-content: center;

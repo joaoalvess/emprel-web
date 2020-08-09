@@ -83,7 +83,7 @@ const Dashboard: React.FC = () => {
           </DivFilter>
           {data.map((map, i) => (
             <ViewTable key={i}>
-
+              <h1> {map.temperatura} </h1>
             </ViewTable>
           ))}
         </DataContainer>

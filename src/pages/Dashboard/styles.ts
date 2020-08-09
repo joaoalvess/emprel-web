@@ -6,7 +6,7 @@ export const Container = styled.div`
   background-image: url('../../assets/background.png');
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
 `;
 
@@ -14,6 +14,7 @@ export const DivSearch = styled.div`
   display: flex;
   flex-direction: row;
   margin-bottom: 30px;
+  margin-top: 10%
 `;
 
 export const Search = styled.input`
@@ -48,11 +49,11 @@ export const FilterButton = styled.button`
 export const DivFilter = styled.div`
   display: flex;
   flex-direction: row;
-  margin: 10px 
+  margin: 10px; 
 `;
 
 export const DataContainer = styled.div`
-  width: 50%;
+  width: 60%;
   display: flex;
   flex-direction: column;
   background: #f5f5f4;

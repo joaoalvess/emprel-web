@@ -39,6 +39,8 @@ const Dashboard: React.FC = () => {
   const [data, setData] = useState<Data[]>([])
 
   const [severDate, setSeverDate] = useState("")
+  const [defaultDate, setDefaultDate] = useState("2020-08-11")
+  const [selectDate, setSelectDate] = useState("")
   const [select, setSelect] = useState<String>('data')
   const [selectType, setSelectType] = useState<any>('')
   const [id, setId] = useState([])
@@ -49,7 +51,29 @@ const Dashboard: React.FC = () => {
 
   useEffect(() => {
     setSeverDate(`${day}${month}${year}`)
-  },[day, month, year])
+    const finishDate = `${year}-${month}-${day}`
+
+    const split = finishDate
+    const array = split.split('-')
+    const mes = ("00" + array[1]).slice(-2)
+    const dia = ("00" + array[2]).slice(-2)
+
+    setSelectDate(`${array[0]}-${mes}-${dia}`)
+    console.log(defaultDate)
+  },[day, defaultDate, month, year])
+
+  useEffect(() => {
+    if(selectDate != "") {
+      const split = selectDate
+      const array = split.split('-')
+      const dia = parseInt(array[2])
+      const mes = parseInt(array[1])
+  
+      const finishDate = `${dia}${mes}${array[0]}`
+      
+      setSeverDate(finishDate)
+    }
+  },[selectDate])
 
   useEffect(() => {
     if(data != null) {
@@ -90,8 +114,6 @@ const Dashboard: React.FC = () => {
 
   const classes = useStyles();
 
-  const [value, setValue] = React.useState('female');
-
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setSelect(event.target.value as string);
   };
@@ -110,9 +132,10 @@ const Dashboard: React.FC = () => {
           <DivFilter>
           <AlignCenter>
           <FormLabel component="legend">Questionarios</FormLabel>
-            <RadioGroup aria-label="gender" name="gender1" value={value} onChange={handleChange}>
-              <FormControlLabel value="female" control={<Radio />} label="Respondidos" />
+            <RadioGroup aria-label="gender" name="gender1" value={select} onChange={handleChange}>
+              <FormControlLabel value="data" control={<Radio />} label="Respondidos" />
               <FormControlLabel value="male" control={<Radio />} label="Não Respondidos" />
+              <FormControlLabel value="apto" control={<Radio />} label="Inaptos" />
             </RadioGroup>
           </AlignCenter>
           <AlignCenter>
@@ -142,10 +165,11 @@ const Dashboard: React.FC = () => {
             id="date"
             label="Selecione uma data"
             type="date"
-            defaultValue="2020-08-10"
+            value={selectDate}
             InputLabelProps={{
               shrink: true,
             }}
+            onChange={(e) => setSelectDate(e.target.value)}
           />
           </DivFilter>
           <TableContainer component={Paper}>
@@ -159,7 +183,6 @@ const Dashboard: React.FC = () => {
                   <TableCell align="left">Temperatura</TableCell>
                   <TableCell align="left">Sintomas</TableCell>
                   <TableCell align="left">Matricula</TableCell>
-                  <TableCell align="left">Data</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -168,16 +191,23 @@ const Dashboard: React.FC = () => {
                     <TableCell component="th" scope="row">
                       {data.nome}
                     </TableCell>
-                    { data.temperatura != 30.2 ? data.apto ? <TableCell align="left">Sim</TableCell> : <TableCell align="left">Não</TableCell> : <TableCell align="left"></TableCell> }
+                    { data.apto != false ? data.temperatura != 30.2 ? 
+                      <TableCell style={{color: '#0f0'}} align="left">Sim</TableCell> : 
+                      <TableCell align="left"></TableCell> : 
+                      <TableCell style={{color: '#f00'}} align="left">Não</TableCell> 
+                    }
                     <TableCell align="left">{data.email}</TableCell>
                     <TableCell align="left">{data.numero}</TableCell>
-                    { data.temperatura != 30.2 ?  
-                      <TableCell align="left">{data.temperatura}</TableCell> : 
-                      <TableCell align="left">Medir Temperatura</TableCell>
+                    { data.temperatura != 30.2 ? data.temperatura >= 37.5 ?
+                      <TableCell style={{color: '#f00'}} align="left">{data.temperatura}</TableCell> :
+                      <TableCell style={{color: '#0f0'}} align="left">{data.temperatura}</TableCell> : 
+                      <TableCell style={{color: '#f00'}} align="left">Medir Temperatura</TableCell>
                     }
-                    <TableCell align="left"> {data.count} </TableCell>
+                    { data.count > 0 ? 
+                      <TableCell style={{color: '#f00'}} align="left"> {data.count} </TableCell> : 
+                      <TableCell style={{color: '#0f0'}} align="left"> {data.count} </TableCell> 
+                    }
                     <TableCell align="left">{data.matricula}</TableCell>
-                    <TableCell align="left">{data.data}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>

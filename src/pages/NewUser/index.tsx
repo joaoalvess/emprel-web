@@ -1,28 +1,28 @@
-import React, { useState, useEffect } from 'react';
-import { Container } from './styles';
-import { Input, Label } from '../../components/Input/styles'
-import { Button } from '../../components/Button/styles'
-import api from '../../services/api'
+import React, { useState, useEffect } from "react";
+import { Container } from "./styles";
+import { Input, Label } from "../../components/Input/styles";
+import { Button } from "../../components/Button/styles";
+import api from "../../services/api";
 
 const NewUser: React.FC = () => {
-  const [selectUser, setSelectUser] = useState('')
-  const [selectEmail, setSelectEmail] = useState('')
-  const [selectSenha, setSelectSenha] = useState('')
-  const [selectCpf, setSelectCpf] = useState('')
-  const [selectMatricula, setSelectMatricula] = useState<number>()
-  const [selectNumero, setSelectNumero] = useState<number>()
+  const [selectUser, setSelectUser] = useState("");
+  const [selectEmail, setSelectEmail] = useState("");
+  const [selectSenha, setSelectSenha] = useState("");
+  const [selectCpf, setSelectCpf] = useState("");
+  const [selectMatricula, setSelectMatricula] = useState(0);
+  const [selectNumero, setSelectNumero] = useState(0);
 
   useEffect(() => {
-    console.log(selectUser.toLowerCase())
-  }, [selectUser])
+    console.log(selectUser.toLowerCase());
+  }, [selectUser]);
 
   async function handleSubmit() {
-    const nome = selectUser
-    const email = selectEmail
-    const senha = selectSenha
-    const cpf = selectCpf
-    const matricula = selectMatricula
-    const numero = selectNumero
+    const nome = selectUser;
+    const email = selectEmail;
+    const senha = selectSenha;
+    const cpf = selectCpf;
+    const matricula = selectMatricula;
+    const numero = selectNumero;
 
     const formData = {
       nome,
@@ -30,61 +30,70 @@ const NewUser: React.FC = () => {
       senha,
       cpf,
       matricula,
-      numero
-    }
+      numero,
+    };
 
-    await api.post('/createuser', formData)
-    .then(() => {
-      alert('sucess')
-      setSelectUser('')
-      setSelectEmail('')
-      setSelectSenha('')
-      setSelectCpf('')
-      setSelectMatricula(0)
-      setSelectNumero(0)
-    }).catch(() => {
-      alert('fail')
-    })
-  }  
+    await api
+      .post("/createuser", formData)
+      .then((response: any) => {
+        alert("sucess");
+        console.log(response);
+        setSelectUser("");
+        setSelectEmail("");
+        setSelectSenha("");
+        setSelectCpf("");
+        setSelectMatricula(0);
+        setSelectNumero(0);
+      })
+      .catch((response: any) => {
+        alert("fail");
+        console.log(response);
+      });
+  }
 
   return (
     <Container>
       <Label>Nome</Label>
-      <Input 
+      <Input
         value={selectUser}
-        onChange={(e:any) => setSelectUser(e.target.value)} 
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+          setSelectUser(e.target.value);
+        }}
       />
       <Label>email</Label>
-      <Input 
-        
+      <Input
         value={selectEmail}
-        onChange={(e:any) => setSelectEmail(e.target.value)} 
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+          setSelectEmail(e.target.value);
+        }}
       />
       <Label>senha</Label>
-      <Input        
+      <Input
         value={selectSenha}
-        onChange={(e:any) => setSelectSenha(e.target.value)} 
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+          setSelectSenha(e.target.value);
+        }}
       />
       <Label>cpf</Label>
-      <Input        
+      <Input
         value={selectCpf}
-        onChange={(e:any) => setSelectCpf(e.target.value)}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+          setSelectCpf(e.target.value);
+        }}
       />
       <Label>matricula</Label>
-      <Input        
+      <Input
         value={selectMatricula}
-        onChange={(e:any) => setSelectMatricula(e.target.value)} 
+        onChange={(e: any) => setSelectMatricula(e.target.value)}
       />
       <Label>numero</Label>
-      <Input        
+      <Input
         value={selectNumero}
-        onChange={(e:any) => setSelectNumero(e.target.value)} 
+        onChange={(e: any) => setSelectNumero(e.target.value)}
       />
-      <Button
-        onClick={() => handleSubmit()}
-      >enviar</Button>
+      <Button onClick={() => handleSubmit()}>enviar</Button>
     </Container>
   );
-}
+};
 
 export default NewUser;

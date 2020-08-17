@@ -1,6 +1,6 @@
-import React from 'react';
-import { Container, Image, Links } from './styles';
-import Logo from '../../assets/menulogo.png'
+import React from "react";
+import { Container, Image, Links } from "./styles";
+import Logo from "../../assets/menulogo.png";
 
 const Menu: React.FC = () => {
   return (
@@ -22,6 +22,6 @@ const Menu: React.FC = () => {
       </Links>
     </Container>
   );
-}
+};
 
 export default Menu;

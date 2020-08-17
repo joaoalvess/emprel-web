@@ -13,6 +13,7 @@
 firebase.json
 .firebase
 .firebaserc
+/src/services
 
 # misc
 .DS_Store
@@ -25,5 +26,3 @@ firebase.json
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
-/src/services

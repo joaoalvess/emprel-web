@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { Container } from "./styles";
-import { Input, Label } from "../../components/Input/styles";
-import { Button } from "../../components/Button/styles";
-import api from "../../services/api";
+import React, { useState, useEffect } from 'react';
+import { Container } from './styles';
+import { Input, Label } from '../../components/Input/styles';
+import { Button } from '../../components/Button/styles';
+import api from '../../services/api';
 
 const NewUser: React.FC = () => {
-  const [selectUser, setSelectUser] = useState("");
-  const [selectEmail, setSelectEmail] = useState("");
-  const [selectSenha, setSelectSenha] = useState("");
-  const [selectCpf, setSelectCpf] = useState("");
+  const [selectUser, setSelectUser] = useState('');
+  const [selectEmail, setSelectEmail] = useState('');
+  const [selectSenha, setSelectSenha] = useState('');
+  const [selectCpf, setSelectCpf] = useState('');
   const [selectMatricula, setSelectMatricula] = useState(0);
   const [selectNumero, setSelectNumero] = useState(0);
 
@@ -34,19 +34,19 @@ const NewUser: React.FC = () => {
     };
 
     await api
-      .post("/createuser", formData)
+      .post('/createuser', formData)
       .then((response: any) => {
-        alert("sucess");
+        alert('sucess');
         console.log(response);
-        setSelectUser("");
-        setSelectEmail("");
-        setSelectSenha("");
-        setSelectCpf("");
+        setSelectUser('');
+        setSelectEmail('');
+        setSelectSenha('');
+        setSelectCpf('');
         setSelectMatricula(0);
         setSelectNumero(0);
       })
       .catch((response: any) => {
-        alert("fail");
+        alert('fail');
         console.log(response);
       });
   }

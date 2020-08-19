@@ -1,5 +1,6 @@
 import React, { useState, FormEvent } from 'react';
 import { useHistory } from 'react-router-dom';
+// eslint-disable-next-line object-curly-newline
 import { Container, Body, Form, Title, ImageLogo } from './styles';
 import { Input, Label } from '../../components/Input/styles';
 import { Button } from '../../components/Button/styles';

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Button = styled.button`
   background-color: #2c4fa1;
@@ -12,5 +12,7 @@ export const Button = styled.button`
   margin-bottom: 24px;
   font-size: 24px;
   color: #f4f4f5;
-  font-family: "roboto", sans-serif;
+  font-family: 'roboto', sans-serif;
 `;
+
+export const T = styled.p``;

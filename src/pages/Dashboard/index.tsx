@@ -1,7 +1,9 @@
+/* eslint-disable no-shadow */
 /* eslint-disable array-callback-return */
 /* eslint-disable eqeqeq */
 /* eslint-disable no-nested-ternary */
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import {
   Table,
   Radio,
@@ -72,6 +74,8 @@ const Dashboard: React.FC = () => {
   const [choice, setChoice] = useState<string>('select');
   const [id] = useState([]);
 
+  const history = useHistory();
+
   const day = new Date().getDate();
   const month = new Date().getMonth() + 1;
   const year = new Date().getFullYear();
@@ -86,7 +90,6 @@ const Dashboard: React.FC = () => {
     const dia = `00${array[2]}`.slice(-2);
 
     setSelectDate(`${array[0]}-${mes}-${dia}`);
-    console.log(defaultDate);
   }, [day, defaultDate, month, year]);
 
   useEffect(() => {
@@ -104,10 +107,9 @@ const Dashboard: React.FC = () => {
 
   useEffect(() => {
     if (data != null) {
-      data.map((mapData: any) => {
-        const array = mapData.user_id;
-        console.log(array);
-      });
+      const teste = data.map((mapData: any) => mapData.user_id);
+
+      console.log(teste);
     }
   }, [data, id]);
 
@@ -122,11 +124,8 @@ const Dashboard: React.FC = () => {
                 return;
               }
               setData(response.data);
-              console.log(response.data);
             })
-            .catch(() => {
-              console.log('error');
-            });
+            .catch((response: any) => response);
         }
         if (select != 'data') {
           await api
@@ -135,11 +134,8 @@ const Dashboard: React.FC = () => {
             )
             .then((response: any) => {
               setData(response.data);
-              console.log(select);
             })
-            .catch(() => {
-              console.log('error');
-            });
+            .catch((response: any) => response);
         }
       }
       if (choice == 'inapto') {
@@ -151,11 +147,8 @@ const Dashboard: React.FC = () => {
                 return;
               }
               setData(response.data);
-              console.log(select);
             })
-            .catch(() => {
-              console.log('error');
-            });
+            .catch((response: any) => response);
         }
         if (select != 'data') {
           await api
@@ -164,11 +157,8 @@ const Dashboard: React.FC = () => {
             )
             .then((response: any) => {
               setData(response.data);
-              console.log(select);
             })
-            .catch(() => {
-              console.log('error');
-            });
+            .catch((response: any) => response);
         }
       }
     }
@@ -185,6 +175,13 @@ const Dashboard: React.FC = () => {
   const handleChangeChoice = (event: React.ChangeEvent<{ value: unknown }>) => {
     setChoice(event.target.value as string);
   };
+
+  function handleNavigateToForm(id: any) {
+    history.push({
+      pathname: '/form',
+      state: id,
+    });
+  }
 
   return (
     <>
@@ -275,7 +272,12 @@ const Dashboard: React.FC = () => {
               <TableBody>
                 {data.map((mapData: any) => (
                   <TableRow key={mapData.id}>
-                    <TableCell component="th" scope="row">
+                    <TableCell
+                      onClick={() => handleNavigateToForm(mapData.id)}
+                      style={{ cursor: 'pointer' }}
+                      component="th"
+                      scope="row"
+                    >
                       {mapData.nome}
                     </TableCell>
                     {mapData.apto !== false ? (

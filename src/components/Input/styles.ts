@@ -11,19 +11,19 @@ export const Input = styled.input`
   font-family: 'roboto', sans-serif;
   font-size: 16px;
   margin-bottom: 24px;
-  border: 2px solid #958f90
+  border: 2px solid #958f90;
 `;
 
 export const Label = styled.label`
   font-family: 'roboto', sans-serif;
   font-size: 16px;
   margin-bottom: 8px;
-  margin-right: 230px
+  margin-right: 230px;
 `;
 
 export const Form = styled.div`
   align-self: stretch;
   padding-left: 15%;
   margin-bottom: 80px;
-  margin-top: 20px
+  margin-top: 20px;
 `;

@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 export const Container = styled.div`
   width: 100%;
@@ -22,7 +22,7 @@ export const Search = styled.input`
   border-radius: 5px;
   margin-right: 20px;
   font-size: 16px;
-  border: 1px solid #d3d4d5
+  border: 1px solid #d3d4d5;
 `;
 
 export const SearchButton = styled.button`
@@ -32,10 +32,10 @@ export const SearchButton = styled.button`
   align-items: center;
   width: 150px;
   font-size: 16px;
-  color: #2C4FA1;
+  color: #2c4fa1;
   font-family: 'roboto', sans-serif;
   &:hover {
-      background-color: #357ebd;
+    background-color: #357ebd;
   }
 `;
 
@@ -45,14 +45,13 @@ export const FilterButton = styled.button`
   border-radius: 20px;
   padding: 7px 10px 7px 10px;
   margin-right: 10px;
-  border: 1px solid #2C4FA1;
-  text-align: left; 
+  border: 1px solid #2c4fa1;
+  text-align: left;
 
-
-    &:hover {
-    background-color: #2C4FA1;
+  &:hover {
+    background-color: #2c4fa1;
     color: #f4f4f5;
-    }
+  }
 `;
 
 export const DivFilter = styled.div`
@@ -61,7 +60,7 @@ export const DivFilter = styled.div`
   margin: 10px 0 15px 0;
   text-align: left;
   justify-content: center;
-  align-items: center; 
+  align-items: center;
 `;
 
 export const DataContainer = styled.div`
@@ -79,10 +78,10 @@ export const DataContainer = styled.div`
 export const ViewTable = styled.div`
   width: 60vw;
   display: flex;
-  background-color: #2C4FA1;
+  background-color: #2c4fa1;
   justify-content: space-around;
   margin-top: 20px;
-  border-radius: 2px
+  border-radius: 2px;
 `;
 
 export const ButtonTable = styled.button`
@@ -98,5 +97,5 @@ export const AlignCenter = styled.div`
   display: flex;
   flex-direction: column;
   min-width: 200px;
-  margin-right: 100px
+  margin-right: 100px;
 `;

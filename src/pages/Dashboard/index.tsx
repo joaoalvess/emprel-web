@@ -42,6 +42,7 @@ const Dashboard: React.FC = () => {
   const [defaultDate, setDefaultDate] = useState("2020-08-11")
   const [selectDate, setSelectDate] = useState("")
   const [select, setSelect] = useState<String>('data')
+  const [choice, setChoice] = useState<String>('select')
   const [selectType, setSelectType] = useState<any>('')
   const [id, setId] = useState([])
 
@@ -85,28 +86,57 @@ const Dashboard: React.FC = () => {
 
   useEffect(() => {
     async function loadForms() {
-      if(select == 'data'){
-        await api.get(`/form?select=${select}&${select}=${severDate}`)
-        .then((response:any) => {
-          if(response.data == null || response.data.length == 0){
-            return
-          }
-          setData(response.data)
-          console.log(select)
-        })
-        .catch(()=>{
-          console.log("error")
-        })
+      if (choice == "select") {
+        if(select == 'data'){
+          await api.get(`/formselect?select=${select}&selectDate=${severDate}`)
+          .then((response:any) => {
+            if(response.data == null || response.data.length == 0){
+              return
+            }
+            setData(response.data)
+            console.log(select)
+          })
+          .catch(()=>{
+            console.log("error")
+          })
+        }
+        if(select != 'data') {
+          await api.get(`/formselect?select=${select}&${select}=true&selectDate=${severDate}`)
+          .then((response:any) => {
+            setData(response.data)
+            console.log(select)
+          })
+          .catch(()=>{
+            console.log("error")
+          })
+        }
       }
-      if(select != 'data') {
-        await api.get(`/form?select=${select}&${select}=true`)
-        .then((response:any) => {
-          setData(response.data)
-          console.log(select)
-        })
-        .catch(()=>{
-          console.log("error")
-        })
+      if (choice == "inapto") {
+        if (select == "data") {
+          await api.get(`/forminapto?select=${select}&selectDate=${severDate}`)
+            .then((response: any) => {
+              if (response.data == null || response.data.length === 0) {
+                return;
+              }
+              setData(response.data);
+              console.log(select);
+            })
+            .catch(() => {
+              console.log("error");
+            });
+        }
+        if (select != "data") {
+          await api.get(
+              `/forminapto?select=${select}&${select}=true&selectDate=${severDate}`
+            )
+            .then((response: any) => {
+              setData(response.data);
+              console.log(select);
+            })
+            .catch(() => {
+              console.log("error");
+            });
+        }
       }
     }
     loadForms()

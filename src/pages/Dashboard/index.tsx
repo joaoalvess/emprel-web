@@ -180,8 +180,11 @@ const Dashboard: React.FC = () => {
             )
             .then((response: any) => {
               setData(response.data);
+              console.log(select);
             })
-            .catch((response: any) => response);
+            .catch(() => {
+              console.log('error');
+            });
         }
       }
       if (choice == 'inapto') {
@@ -190,8 +193,11 @@ const Dashboard: React.FC = () => {
             .get(`/forminapto?select=${select}&selectDate=${severDate}`)
             .then((response: any) => {
               setData(response.data);
+              console.log(select);
             })
-            .catch((response: any) => response);
+            .catch(() => {
+              console.log('error');
+            });
         }
         if (select != 'data') {
           await api
@@ -200,8 +206,11 @@ const Dashboard: React.FC = () => {
             )
             .then((response: any) => {
               setData(response.data);
+              console.log(select);
             })
-            .catch((response: any) => response);
+            .catch(() => {
+              console.log('error');
+            });
         }
       }
     }

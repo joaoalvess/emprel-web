@@ -95,3 +95,46 @@ export const LetraBaixo = styled.p`
   margin-bottom: 10px;
   font-family: Roboto_500Medium;
 `;
+
+export const ViewTemp = styled.div`
+  flex-direction: row;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+`;
+
+export const ViewCenter = styled.div`
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 5px;
+  margin-top: 5px;
+`;
+
+export const TextTemp = styled.p`
+  font-size: 20px;
+  font-family: Roboto_500Medium;
+  margin-top: 20px;
+`;
+
+export const TemperaturaNormal = styled.p`
+  font-size: 28px;
+  margin-left: 30px;
+  margin-right: 30px;
+  color: #008000;
+`;
+
+export const TemperaturaAlta = styled.p`
+  font-size: 28px;
+  margin-left: 30px;
+  margin-right: 30px;
+  color: #ffff00;
+`;
+
+export const TemperaturaMuitoAlta = styled.p`
+  font-size: 28px;
+  margin-left: 30px;
+  margin-right: 30px;
+  color: #b22222;
+  text-align: center;
+`;

@@ -6,10 +6,11 @@ export const Container = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  height: 100vh;
 `;
 
 export const Formulario = styled.div`
-  width: 60%;
+  width: 80%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -17,16 +18,18 @@ export const Formulario = styled.div`
   border-radius: 5px;
   border: 2px solid #d4d4d5;
   background: #f0f0f5;
-  padding: 15px;
+  padding-top: 15px;
 `;
 
-export const ImageLogo = styled.img``;
+export const ImageLogo = styled.img`
+  width: 250px;
+`;
 
 export const Title = styled.h1`
   text-align: center;
-  font-size: 32px;
+  font-size: 28px;
   font-family: 'Roboto', sans-serif;
-  margin: 30px 0 20px 0;
+  margin: 50px 0 5px 0;
 `;
 
 export const Resposta = styled.p`
@@ -47,7 +50,7 @@ export const RespostaTosse = styled.p`
 
 export const Cargo = styled.h2`
   font-size: 20px;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   font-family: Roboto_400Regular;
   text-align: center;
 `;
@@ -94,4 +97,10 @@ export const LetraBaixo = styled.p`
   margin-top: 10px;
   margin-bottom: 10px;
   font-family: Roboto_500Medium;
+`;
+
+export const ViewCenter = styled.div`
+  text-align: center;
+  justify-content: center;
+  margin-top: 20px;
 `;

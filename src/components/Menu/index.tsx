@@ -4,19 +4,16 @@ import Logo from '../../assets/menulogo.png';
 
 const Menu: React.FC = () => (
   <Container>
-    <Links to="/Dashboard">
+    <Links to="/dashboard">
       <Image src={Logo} alt="logo" />
     </Links>
-    <Links to="/Dashboard">
-      <p>Questionarios</p>
+    <Links to="/dashboard">
+      <p>Questionários</p>
     </Links>
-    <Links to="/Dashboard">
-      <p>Relatorios</p>
+    <Links to="/visitante">
+      <p>Cadastrar Visitante</p>
     </Links>
-    <Links to="/Dashboard">
-      <p>Cadastra Visitante</p>
-    </Links>
-    <Links to="/Dashboard">
+    <Links to="/dashboard">
       <p>Documentação</p>
     </Links>
   </Container>

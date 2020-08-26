@@ -99,3 +99,7 @@ export const AlignCenter = styled.div`
   min-width: 200px;
   margin-right: 100px;
 `;
+
+export const ViewCenter = styled.div`
+  margin-bottom: 25px;
+`;

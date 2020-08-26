@@ -1,7 +1,8 @@
+/* eslint-disable no-nested-ternary */
+/* eslint-disable eqeqeq */
 import React, { useEffect, useState } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 import api from '../../services/api';
-import Menu from '../../components/Menu';
 import {
   Container,
   Title,
@@ -16,6 +17,11 @@ import {
   Pergunta,
   SimouNao,
   Sintomas,
+  TemperaturaAlta,
+  TemperaturaMuitoAlta,
+  TemperaturaNormal,
+  ViewTemp,
+  ViewCenter,
 } from './styles';
 import { Button } from '../../components/Button/styles';
 import Logo from '../../assets/logo.png';
@@ -70,7 +76,6 @@ const Form: React.FC = () => {
 
   return (
     <>
-      <Menu />
       <Container>
         <Formulario>
           <ImageLogo src={Logo} alt="Logo" />
@@ -169,6 +174,26 @@ const Form: React.FC = () => {
               <Resposta>Não</Resposta>
             )}
           </Pergunta>
+          <ViewCenter>
+            <Pergunta>Temperatura:</Pergunta>
+          </ViewCenter>
+          <ViewTemp>
+            {data.temperatura != 30.2 ? (
+              data.temperatura >= 37.2 ? (
+                data.temperatura >= 37.5 ? (
+                  <TemperaturaMuitoAlta>
+                    {data.temperatura}
+                  </TemperaturaMuitoAlta>
+                ) : (
+                  <TemperaturaAlta>{data.temperatura}</TemperaturaAlta>
+                )
+              ) : (
+                <TemperaturaNormal>{data.temperatura}</TemperaturaNormal>
+              )
+            ) : (
+              <TemperaturaMuitoAlta>Medir Temperatura</TemperaturaMuitoAlta>
+            )}
+          </ViewTemp>
           <Button onClick={handleNavigatetoPerfil}>Perfil</Button>
           <Button onClick={handleNavigatetoBack}>Voltar</Button>
         </Formulario>

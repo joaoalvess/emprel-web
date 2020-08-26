@@ -1,3 +1,8 @@
+/* eslint-disable react/jsx-curly-newline */
+/* eslint-disable implicit-arrow-linebreak */
+/* eslint-disable no-confusing-arrow */
+/* eslint-disable react/button-has-type */
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable no-shadow */
 /* eslint-disable array-callback-return */
 /* eslint-disable eqeqeq */
@@ -22,15 +27,16 @@ import {
   Select,
   InputLabel,
 } from '@material-ui/core';
-
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import ReactExport from 'react-export-excel';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   Container,
-  Search,
   DivSearch,
   DivFilter,
   DataContainer,
   AlignCenter,
+  ViewCenter,
 } from './styles';
 import api from '../../services/api';
 import Menu from '../../components/Menu';
@@ -68,11 +74,13 @@ const Dashboard: React.FC = () => {
   const [data, setData] = useState<Data[]>([]);
 
   const [severDate, setSeverDate] = useState('');
+  const [dateToday, setDateToday] = useState('');
   const [defaultDate] = useState('2020-08-11');
   const [selectDate, setSelectDate] = useState('');
   const [select, setSelect] = useState<string>('data');
+  const [selectUser, setSelectUser] = useState<string>('');
   const [choice, setChoice] = useState<string>('select');
-  const [id] = useState([]);
+  const [relatorioNome, setRelatorioNome] = useState<string>('Respondidos');
 
   const history = useHistory();
 
@@ -81,48 +89,86 @@ const Dashboard: React.FC = () => {
   const year = new Date().getFullYear();
 
   useEffect(() => {
-    setSeverDate(`${day}${month}${year}`);
-    const finishDate = `${year}-${month}-${day}`;
+    async function selectDateNow() {
+      await setSeverDate(`${day}${month}${year}`);
+      const finishDate = await `${year}-${month}-${day}`;
 
-    const split = finishDate;
-    const array = split.split('-');
-    const mes = `00${array[1]}`.slice(-2);
-    const dia = `00${array[2]}`.slice(-2);
+      const split = await finishDate;
+      const array = await split.split('-');
+      const mes = await `00${array[1]}`.slice(-2);
+      const dia = await `00${array[2]}`.slice(-2);
 
-    setSelectDate(`${array[0]}-${mes}-${dia}`);
+      await setDateToday(`${array[0]}-${mes}-${dia}`);
+      await setSelectDate(`${array[0]}-${mes}-${dia}`);
+    }
+
+    selectDateNow();
   }, [day, defaultDate, month, year]);
 
   useEffect(() => {
-    if (selectDate !== '') {
-      const split = selectDate;
-      const array = split.split('-');
-      const dia = parseInt(array[2], 10);
-      const mes = parseInt(array[1], 10);
+    async function onSeverDate() {
+      if (selectDate !== '') {
+        const split = await selectDate;
+        const array = await split.split('-');
+        const dia = await parseInt(array[2], 10);
+        const mes = await parseInt(array[1], 10);
 
-      const finishDate = `${dia}${mes}${array[0]}`;
+        const finishDate = await `${dia}${mes}${array[0]}`;
 
-      setSeverDate(finishDate);
+        await setSeverDate(finishDate);
+      }
     }
+
+    onSeverDate();
   }, [selectDate]);
 
-  useEffect(() => {
-    if (data != null) {
-      const teste = data.map((mapData: any) => mapData.user_id);
+  const handleChangeSelect = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setSelect(event.target.value as string);
+  };
 
-      console.log(teste);
-    }
-  }, [data, id]);
-
+  const handleChangeChoice = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setChoice(event.target.value as string);
+  };
   useEffect(() => {
     async function loadForms() {
+      if (choice == 'notsend') {
+        await api
+          .get(`/formselect?select=data&selectDate=${severDate}`)
+          .then((response: any) => {
+            const teste = response.data.map((mapData: any) => mapData.user_id);
+            const id = { id: teste };
+
+            api
+              .post('/formnotsend', id)
+              .then((response: any) => {
+                setData(response.data);
+                console.log(response.data);
+              })
+              .catch((response: any) => response);
+          });
+      }
       if (choice == 'select') {
         if (select == 'data') {
           await api
             .get(`/formselect?select=${select}&selectDate=${severDate}`)
             .then((response: any) => {
-              if (response.data == null || response.data.length == 0) {
+              if (
+                // eslint-disable-next-line operator-linebreak
+                (response.data == null && selectDate == dateToday) ||
+                (response.data.length == 0 && selectDate == dateToday)
+              ) {
                 return;
               }
+
+              setData(response.data);
+              console.log(response.data);
+            })
+            .catch((response: any) => response);
+        }
+        if (select == 'sintomas') {
+          await api
+            .get(`/formselect?select=${select}&selectDate=${severDate}`)
+            .then((response: any) => {
               setData(response.data);
             })
             .catch((response: any) => response);
@@ -143,9 +189,6 @@ const Dashboard: React.FC = () => {
           await api
             .get(`/forminapto?select=${select}&selectDate=${severDate}`)
             .then((response: any) => {
-              if (response.data == null || response.data.length === 0) {
-                return;
-              }
               setData(response.data);
             })
             .catch((response: any) => response);
@@ -164,17 +207,9 @@ const Dashboard: React.FC = () => {
     }
 
     loadForms();
-  }, [choice, id, select, severDate]);
+  }, [choice, dateToday, select, selectDate, severDate]);
 
   const classes = useStyles();
-
-  const handleChangeSelect = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setSelect(event.target.value as string);
-  };
-
-  const handleChangeChoice = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setChoice(event.target.value as string);
-  };
 
   function handleNavigateToForm(id: any) {
     history.push({
@@ -183,13 +218,63 @@ const Dashboard: React.FC = () => {
     });
   }
 
+  function handleNavigateToPerfil(id: any) {
+    history.push({
+      pathname: '/perfil',
+      state: id,
+    });
+  }
+
+  async function getUserId() {
+    await api.get(`/perfilname/${selectUser}`).then((response: any) => {
+      history.push({
+        pathname: '/perfil',
+        state: response.data.id,
+      });
+    });
+  }
+
+  const { ExcelFile } = ReactExport;
+  const { ExcelSheet } = ReactExport.ExcelFile;
+  const { ExcelColumn } = ReactExport.ExcelFile;
+
+  useEffect(() => {
+    if (choice == 'select') {
+      setRelatorioNome('Respondidos');
+    }
+    if (choice == 'inapto') {
+      setRelatorioNome('Inaptos');
+    }
+    if (choice == 'notsend') {
+      setRelatorioNome('Não Respondidos');
+    }
+  }, [choice]);
+
   return (
     <>
       <Container>
         <Menu />
         <DivSearch>
-          <Search />
-          <Button variant="contained" color="primary">
+          <Autocomplete
+            id="combo-box-demo"
+            options={data}
+            getOptionLabel={(data) => data.nome}
+            onInputChange={(event, newInputValue) => {
+              setSelectUser(newInputValue);
+            }}
+            style={{ width: 600, marginRight: 25 }}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Digite um nome"
+                variant="outlined"
+                onChange={(event: React.ChangeEvent<{ value: unknown }>) => {
+                  setSelectUser(event.target.value as string);
+                }}
+              />
+            )}
+          />
+          <Button onClick={getUserId} variant="contained" color="primary">
             Pesquisar
           </Button>
         </DivSearch>
@@ -231,9 +316,11 @@ const Dashboard: React.FC = () => {
                 <MenuItem value="data">Data</MenuItem>
                 <MenuItem value="infectado">Recuperados</MenuItem>
                 <MenuItem value="temperatura">Temperatura</MenuItem>
+                <MenuItem value="visitante">Visitantes</MenuItem>
                 <MenuItem value="contato_infectado">
                   Contato com infectado
                 </MenuItem>
+                <MenuItem value="sintomas">Sintomas</MenuItem>
                 <MenuItem value="febre">Febre</MenuItem>
                 <MenuItem value="tosse">Tosse</MenuItem>
                 <MenuItem value="calafrio">Calafrios</MenuItem>
@@ -256,6 +343,32 @@ const Dashboard: React.FC = () => {
               onChange={(e) => setSelectDate(e.target.value)}
             />
           </DivFilter>
+          <ViewCenter>
+            <ExcelFile
+              filename={`Relatorio Questionario ${relatorioNome} dia ${severDate}`}
+              element={
+                // eslint-disable-next-line react/jsx-wrap-multilines
+                <Button variant="contained" color="primary">
+                  Gerar Excel
+                </Button>
+              }
+            >
+              <ExcelSheet data={data} name="Questionário">
+                <ExcelColumn label="Nome" value="nome" />
+                <ExcelColumn
+                  label="Apto"
+                  value={(data) =>
+                    data.count >= 0 ? (data.apto ? 'Sim' : 'Não') : ''
+                  }
+                />
+                <ExcelColumn label="Email" value="email" />
+                <ExcelColumn label="Celular" value="numero" />
+                <ExcelColumn label="Temperatura" value="temperatura" />
+                <ExcelColumn label="Sintomas" value="count" />
+                <ExcelColumn label="Matricula" value="matricula" />
+              </ExcelSheet>
+            </ExcelFile>
+          </ViewCenter>
           <TableContainer component={Paper}>
             <Table className={classes.table} aria-label="simple table">
               <TableHead>
@@ -263,7 +376,7 @@ const Dashboard: React.FC = () => {
                   <TableCell>Nome</TableCell>
                   <TableCell align="left">Apto</TableCell>
                   <TableCell align="left">Email</TableCell>
-                  <TableCell align="left">Numero</TableCell>
+                  <TableCell align="left">Celular</TableCell>
                   <TableCell align="left">Temperatura</TableCell>
                   <TableCell align="left">Sintomas</TableCell>
                   <TableCell align="left">Matricula</TableCell>
@@ -272,26 +385,41 @@ const Dashboard: React.FC = () => {
               <TableBody>
                 {data.map((mapData: any) => (
                   <TableRow key={mapData.id}>
-                    <TableCell
-                      onClick={() => handleNavigateToForm(mapData.id)}
-                      style={{ cursor: 'pointer' }}
-                      component="th"
-                      scope="row"
-                    >
-                      {mapData.nome}
-                    </TableCell>
-                    {mapData.apto !== false ? (
-                      mapData.temperatura != 30.2 ? (
-                        <TableCell style={{ color: '#0f0' }} align="left">
-                          Sim
-                        </TableCell>
+                    {choice != 'notsend' ? (
+                      <TableCell
+                        onClick={() => handleNavigateToForm(mapData.id)}
+                        style={{ cursor: 'pointer' }}
+                        component="th"
+                        scope="row"
+                      >
+                        {mapData.nome}
+                      </TableCell>
+                    ) : (
+                      <TableCell
+                        onClick={() => handleNavigateToPerfil(mapData.id)}
+                        style={{ cursor: 'pointer' }}
+                        component="th"
+                        scope="row"
+                      >
+                        {mapData.nome}
+                      </TableCell>
+                    )}
+                    {mapData.count >= 0 ? (
+                      mapData.apto != false ? (
+                        mapData.temperatura != 30.2 ? (
+                          <TableCell style={{ color: '#0f0' }} align="left">
+                            Sim
+                          </TableCell>
+                        ) : (
+                          <TableCell align="left" />
+                        )
                       ) : (
-                        <TableCell align="left" />
+                        <TableCell style={{ color: '#f00' }} align="left">
+                          Não
+                        </TableCell>
                       )
                     ) : (
-                      <TableCell style={{ color: '#f00' }} align="left">
-                        Não
-                      </TableCell>
+                      <TableCell align="left" />
                     )}
                     <TableCell align="left">{mapData.email}</TableCell>
                     <TableCell align="left">{mapData.numero}</TableCell>

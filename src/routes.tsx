@@ -5,6 +5,8 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Form from './pages/Form';
 import NewUser from './pages/NewUser';
+import Perfil from './pages/Perfil';
+import Visitante from './pages/Visitante';
 
 const Routes = () => (
   <BrowserRouter>
@@ -12,6 +14,8 @@ const Routes = () => (
     <Route component={Dashboard} path="/dashboard" />
     <Route component={Form} path="/form" />
     <Route component={NewUser} path="/newuser" />
+    <Route component={Visitante} path="/visitante" />
+    <Route component={Perfil} path="/perfil" />
   </BrowserRouter>
 );
 
